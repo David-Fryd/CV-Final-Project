@@ -144,7 +144,7 @@ def export_image_at_point(point, index, firesize):
                     min=min_values,
                     max=max_values
                 ),
-                description=f'Wildfire_{index}_FIREREPORTING_Size_{firesize}_at_{lat}_{lon}_NAIP_Rectangle',
+                description=f'Wildfire_{index}_FIREREPORTING_YEAR2023_Size_{firesize}_at_{lat}_{lon}_NAIP_Rectangle',
                 driveFolder='CV-Final/Wildfire',
                 scale=IMAGE_RESOLUTION,
                 region=rectangular_geometry,
