@@ -9,7 +9,7 @@
 import pyowm
 import requests
 
-appid = "1cdbd781930c57b4b5d45de51264967c" # api key
+appid = "abc" # api key
 owm = pyowm.OWM(appid)
 
 def OPENWEATHER_get_weather(coordinates):
