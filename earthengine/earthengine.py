@@ -33,7 +33,7 @@ print(len(fires))
 EXPORT_ENABLED = True
 
 # Use geemap to display the data locally
-DISPLAY_LOCAL = True 
+DISPLAY_LOCAL = False 
 
 IMAGE_RESOLUTION = 1 # 1 is NAIP's resolution, but some older images have a GSD of 2 meters
 
@@ -82,9 +82,13 @@ points = [
     # ee.Geometry.Point([-87.629798, 41.878114]), # Chicago
 ]
 
-def export_image_at_point(point, index):
+def export_image_at_point(point, index, firesize):
     # Calculate the coordinates for the rectangle
     rect_coords = point.transform('EPSG:32617', 1e-3).buffer(width / 2, height / 2).bounds().transform('EPSG:4326', 1e-3).coordinates()
+
+    lon = point.coordinates().get(0).getInfo()
+    lat = point.coordinates().get(1).getInfo()
+    
 
     # Create a rectangular geometry around the point
     rectangular_geometry = ee.Geometry.Polygon(rect_coords)
@@ -140,8 +144,8 @@ def export_image_at_point(point, index):
                     min=min_values,
                     max=max_values
                 ),
-                description=f'Wildfire_Size_{index}_FIREREPORTING_NAIP_Rectangle',
-                driveFolder='CV-Final',
+                description=f'Wildfire_{index}_FIREREPORTING_YEAR2023_Size_{firesize}_at_{lat}_{lon}_NAIP_Rectangle',
+                driveFolder='CV-Final/Wildfire',
                 scale=IMAGE_RESOLUTION,
                 region=rectangular_geometry,
                 fileFormat='GeoTIFF',
@@ -180,10 +184,10 @@ def export_image_at_point(point, index):
     # Raw editor available here: https://code.earthengine.google.com/
     # See tasks here: https://code.earthengine.google.com/tasks
 
+
+SKIP_TO = 311
 for idx, fire in enumerate(fires):
     print(f"idx: {idx}")
-    if(idx/len(fires)*100 % 5 == 0):
-        print(f"progress: {idx/len(fires)*100}%")
     print(f"attempting to export {fire['x']}, {fire['y']}: size {fire['size']}")
     point = ee.Geometry.Point([float(fire['x']), float(fire['y'])])
-    export_image_at_point(point, fire['size'])
+    export_image_at_point(point, idx, fire['size'])
