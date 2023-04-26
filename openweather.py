@@ -12,31 +12,30 @@ import requests
 appid = "abc" # api key
 owm = pyowm.OWM(appid)
 
-def OPENWEATHER_get_weather(coordinates):
-    weather = dict()
-    for coordinate in coordinates:
-        lat, lon = coordinate['x'], coordinate['y']
-        start, end = 1640995200, 1672444800 # january 1 2022 - december 31 2022
-        api_url = f"https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={appid}"
-        response = requests.get(api_url)
-        weather[(lat, lon)] = {
-            "temperature": response["list"]["main"]["temp"],
-            "humidity": response["list"]["main"]["humidity"],
-            "wind speed": response["list"]["wind"]["speed"],
-            "rain 3h": response["list"]["rain"]["3h"],
+def OPENWEATHER_get_weather(coordinate):
+    lat, lon = coordinate['x'], coordinate['y']
+    api_url = f"https://history.openweathermap.org/data/2.5/aggregated/year?lat={lat}&lon={lon}&appid={appid}"
+    res = requests.get(api_url)["result"]
+    yearly_aggregate = dict()
+    for entry in res:
+        month = entry["month"]
+        day = entry["day"]
+        mean_temp = entry["temp"]["mean"]
+        mean_humidity = entry["humidity"]["mean"]
+        mean_wind = entry["wind"]["mean"]
+        mean_precipitation = entry["precipitation"]["mean"]
+        if month not in yearly_aggregate:
+            yearly_aggregate[month] = dict()
+        yearly_aggregate[month][day] = {
+            "temp": mean_temp,
+            "humidity": mean_humidity,
+            "wind_speed": mean_wind,
+            "precipitation": mean_precipitation
         }
-    return weather
 
-def PYOWM_get_weather(coordinates):
-    weather = dict()
+def collect_weather_stats(coordinates):
+    weather_stats = dict()
     for coordinate in coordinates:
-        lat, lon = coordinate['x'], coordinate['y']
-        start, end = 1640995200, 1672444800 # january 1 2022 - december 31 2022
-        history = owm.weather_history_at_place(place, start, end) # didn't look like there was a way to query weather history based on latitude longitude, so we may have to stick with api calls
-        day = history.get_weathers()[0]
-        weather[(lat, lon)] = {
-            "temperature": day.get_temperature('celsius'),
-            "humidity": day.get_humidity(),
-            "wind speed": day.get_wind()["speed"],
-            "rain 3h": day.get_rain()["3h"],
-        }
+        yearly_aggregate = OPENWEATHER_get_weather(coordinate)
+        weather_stats[coordinate] = yearly_aggregate
+    return weather_stats
