@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
+import hyperparameters as hp
 
 class VGGModel(keras.Model):
 
@@ -42,7 +43,7 @@ class VGGModel(keras.Model):
         self.head = [
             Flatten(),
 
-            Dense(units=4096, ativation="relu"),
+            Dense(units=4096, activation="relu"),
             Dense(units=4096, activation="relu"),
 
             Dense(units=2, activation="softmax")

@@ -1,1 +1,2 @@
 earthengine/.ENV
+cnn/model/vgg16_imagenet.h5
