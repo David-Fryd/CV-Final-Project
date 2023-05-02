@@ -6,7 +6,7 @@ from datetime import datetime
 import tensorflow as tf
 
 import hyperparameters as hp
-from vgg import VGGModel
+from cnn import YourModel
 from preprocess import Datasets
 from skimage.transform import resize
 from tensorboard_utils import \
