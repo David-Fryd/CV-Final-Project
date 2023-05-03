@@ -15,7 +15,7 @@ class YourModel(keras.Model):
         #     Select an optimizer for your network (see the documentation
         #     for tf.keras.optimizers)
        
-        self.optimizer = keras.optimizers.Adam(
+        self.optimizer = keras.optimizers.SGD(
             learning_rate = 0.001,
         )
     
@@ -53,26 +53,26 @@ class YourModel(keras.Model):
         #       This saves having to reshape tensors in your network.
 
         self.architecture = [
-              Conv2D(16, (3,3), activation='relu', input_shape=(200, 200, 3)),
+              Conv2D(16, (3,3), activation='leaky_relu', input_shape=(200, 200, 3)),
             MaxPool2D(2, 2),
 
-            Conv2D(32, (3,3), activation='relu'),
+            Conv2D(32, (3,3), activation='leaky_relu'),
             MaxPool2D(2, 2),
 
-            Conv2D(64, (3,3), activation='relu'),
+            Conv2D(64, (3,3), activation='leaky_relu'),
             MaxPool2D(2, 2),
             Dropout(0.2),
 
-            Conv2D(64, (3,3), activation='relu'),
+            Conv2D(64, (3,3), activation='leaky_relu'),
             MaxPool2D(2, 2),
 
-            Conv2D(64, (3,3), activation='relu'),
+            Conv2D(64, (3,3), activation='leaky_relu'),
             MaxPool2D(2, 2),
             Dropout(0.2),
 
             Flatten(),
 
-            Dense(512, activation='relu'),
+            Dense(512, activation='leaky_relu'),
             Dense(1, activation='sigmoid')
         ]
 
@@ -92,4 +92,4 @@ class YourModel(keras.Model):
         #     Select a loss function for your network 
         #     (see the documentation for tf.keras.losses)
 
-        return keras.losses.BinaryCrossentropy(from_logits=True)
+        return keras.metrics.binary_crossentropy(labels, predictions, from_logits=False)
