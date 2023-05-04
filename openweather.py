@@ -9,8 +9,59 @@
 import pyowm
 import requests
 
-appid = "abc" # api key
+appid = "1cdbd781930c57b4b5d45de51264967c" # api key
 owm = pyowm.OWM(appid)
+
+lat, lon = 42.816095253156846, -118.52502832775187
+api_url = f"https://history.openweathermap.org/data/2.5/aggregated/year?lat={lat}&lon={lon}&appid={appid}"
+res = requests.get(api_url)
+print(res)
+res = res["result"]
+spring_entry = res[100]
+mean_temp = spring_entry["temp"]["mean"]
+mean_humidity = spring_entry["humidity"]["mean"]
+mean_wind = spring_entry["wind"]["mean"]
+mean_precipitation = spring_entry["precipitation"]["mean"]
+print("NO WILDFIRE: SPRING")
+print(f"  mean temperature: {mean_temp}")
+print(f"  mean humidity: {mean_humidity}")
+print(f"  mean wind: {mean_wind}")
+print(f"  mean precipitation: {mean_precipitation}")
+summer_entry = res[180]
+mean_temp = summer_entry["temp"]["mean"]
+mean_humidity = summer_entry["humidity"]["mean"]
+mean_wind = summer_entry["wind"]["mean"]
+mean_precipitation = summer_entry["precipitation"]["mean"]
+print("NO WILDFIRE: SUMMER")
+print(f"  mean temperature: {mean_temp}")
+print(f"  mean humidity: {mean_humidity}")
+print(f"  mean wind: {mean_wind}")
+print(f"  mean precipitation: {mean_precipitation}")
+
+lat, lon = 44.66581129340926, -122.60229630435458
+api_url = f"https://history.openweathermap.org/data/2.5/aggregated/year?lat={lat}&lon={lon}&appid={appid}"
+response = requests.get(api_url)
+spring_entry = res[100]
+mean_temp = spring_entry["temp"]["mean"]
+mean_humidity = spring_entry["humidity"]["mean"]
+mean_wind = spring_entry["wind"]["mean"]
+mean_precipitation = spring_entry["precipitation"]["mean"]
+print("WILDFIRE: SPRING")
+print(f"  mean temperature: {mean_temp}")
+print(f"  mean humidity: {mean_humidity}")
+print(f"  mean wind: {mean_wind}")
+print(f"  mean precipitation: {mean_precipitation}")
+summer_entry = res[180]
+mean_temp = summer_entry["temp"]["mean"]
+mean_humidity = summer_entry["humidity"]["mean"]
+mean_wind = summer_entry["wind"]["mean"]
+mean_precipitation = summer_entry["precipitation"]["mean"]
+print("WILDFIRE: SUMMER")
+print(f"  mean temperature: {mean_temp}")
+print(f"  mean humidity: {mean_humidity}")
+print(f"  mean wind: {mean_wind}")
+print(f"  mean precipitation: {mean_precipitation}")
+
 
 def OPENWEATHER_get_weather(coordinate):
     lat, lon = coordinate['x'], coordinate['y']
