@@ -1,6 +1,6 @@
 import keras,os
 from keras.models import Sequential
-from keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
+from keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout, BatchNormalization
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import hyperparameters as hp
@@ -15,7 +15,7 @@ class YourModel(keras.Model):
         #     Select an optimizer for your network (see the documentation
         #     for tf.keras.optimizers)
        
-        self.optimizer = keras.optimizers.SGD(
+        self.optimizer = keras.optimizers.Adam(
             learning_rate = 0.001,
         )
     
@@ -53,26 +53,14 @@ class YourModel(keras.Model):
         #       This saves having to reshape tensors in your network.
 
         self.architecture = [
-              Conv2D(16, (3,3), activation='leaky_relu', input_shape=(200, 200, 3)),
-            MaxPool2D(2, 2),
-
-            Conv2D(32, (3,3), activation='leaky_relu'),
-            MaxPool2D(2, 2),
-
-            Conv2D(64, (3,3), activation='leaky_relu'),
-            MaxPool2D(2, 2),
-            Dropout(0.2),
-
-            Conv2D(64, (3,3), activation='leaky_relu'),
-            MaxPool2D(2, 2),
-
-            Conv2D(64, (3,3), activation='leaky_relu'),
-            MaxPool2D(2, 2),
-            Dropout(0.2),
-
             Flatten(),
 
-            Dense(512, activation='leaky_relu'),
+            Dense(32, activation='relu'),
+            Dense(32, activation='relu'),
+
+            BatchNormalization(),
+            Dropout(0.2),
+
             Dense(1, activation='sigmoid')
         ]
 
