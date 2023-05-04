@@ -233,7 +233,7 @@ class Datasets():
         data_gen = data_gen.flow_from_directory(
             path,
             target_size=(img_size, img_size),
-            class_mode='sparse',
+            class_mode='binary',
             batch_size=hp.batch_size,
             shuffle=shuffle,
             classes=classes_for_flow)
