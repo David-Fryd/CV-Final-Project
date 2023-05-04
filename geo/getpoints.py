@@ -53,11 +53,15 @@ def save_output(sampled_points, csv_filename, geojson_filename):
     sampled_points.to_csv(csv_filename, index=False)
     sampled_points.to_file(geojson_filename, driver='GeoJSON')
 
+
+MIN_DIST_IN_METERS = 11000 # 10000 = 10 km minimum distance
+
 # Generate points using Poisson Disk Sampling
-sampled_points = generate_points_poisson(geojson, 10000) # 10 km minimum distance
+sampled_points = generate_points_poisson(geojson, MIN_DIST_IN_METERS)
+num_points = len(sampled_points)
 
 # Save the output as CSV and GeoJSON files
-save_output(sampled_points, "sampled_points.csv", "sampled_points.geojson")
+save_output(sampled_points, f"sampled_points_mindist{MIN_DIST_IN_METERS}_{num_points}points.csv", f"sampled_points_mindist{MIN_DIST_IN_METERS}_{num_points}points.geojson")
 
 print(sampled_points)
 print(len(sampled_points))
