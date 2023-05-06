@@ -58,7 +58,7 @@ def model_confidence_vote(cluster_path):
                 "coordinates": [lon, lat]
             },
             "properties": {
-                "wildfire": votes == 0,
+                "wildfire": votes == 9,
                 "votes": votes,
             }
         }
