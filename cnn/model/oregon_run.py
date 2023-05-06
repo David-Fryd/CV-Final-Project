@@ -9,7 +9,7 @@ import random
 import cv2
 from cnn import YourModel
 
-weights_path = "/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/model/checkpoints/your.weights.e004-acc0.9568.h5"
+weights_path = "/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/model/checkpoints/your.weights.e004-acc0.9482.h5"
 dims = (224, 224, 3)
 
 model = YourModel()
@@ -50,9 +50,7 @@ def model_confidence_vote(cluster_path):
     std = np.std(images, axis=0)
     images = (images - mean) / std
     predictions = np.reshape(model.predict(images), (9,))
-    print(predictions)
     votes = np.count_nonzero(predictions > 0.5)
-    print(votes)
     geoJSON.append({
             "type": "Feature",
             "geometry": {
@@ -60,17 +58,22 @@ def model_confidence_vote(cluster_path):
                 "coordinates": [lon, lat]
             },
             "properties": {
-                "wildfire": votes >= 5,
+                "wildfire": votes == 0,
                 "votes": votes,
             }
         }
     )
+    return votes == 9
 
 def predict_wildfire_risk(dir_path):
+    wildfires = 0
     for path, directories, files in os.walk(dir_path):
         for cluster_dir in directories:
             print(os.path.join(path, cluster_dir))
-            model_confidence_vote(os.path.join(path, cluster_dir))
+            wildfire = model_confidence_vote(os.path.join(path, cluster_dir))
+            if wildfire:
+                wildfires += 1
+    print(f"num wildfires: {wildfires}")
 
 predict_wildfire_risk("/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/oregon_sample")
 with open("sample.json", "w") as outfile:
