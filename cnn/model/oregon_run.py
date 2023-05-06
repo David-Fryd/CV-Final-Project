@@ -5,6 +5,8 @@ from PIL import Image
 import os
 from shapely.geometry import Point
 import json
+import random
+import cv2
 from cnn import YourModel
 
 weights_path = "/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/model/checkpoints/your.weights.e004-acc0.9568.h5"
@@ -25,25 +27,30 @@ geoJSON = []
 # cluster_path: name_index_long_lat
 def filename_to_coordinates(cluster_path):
     items = cluster_path.split('_')
-    lon, lat = items[2], items[3]
+    lon, lat = items[3], items[4]
     return lon, lat
-
-def model_predict(image_path):
-    im = Image.open(image_path)
-    data = np.array(im,dtype=np.float32)
-    data = np.reshape(data, dims)
-    return model.predict_classes(data)
 
 def model_confidence_vote(cluster_path):
     lon, lat = filename_to_coordinates(cluster_path)
     # iterate through cluster path and get predictions
     votes = 0
+    images = np.zeros(
+            (9, 224, 224, 3))
+    i = 0
     for filename in os.listdir(cluster_path):
         f = os.path.join(cluster_path, filename)
-        if os.path.isfile(f) and not f.endswith('.geojson'):
-            if model_predict(f):
-                votes += 1
-    prediction = votes > 4
+        if os.path.isfile(f) and f.endswith('.png'):
+            data = cv2.imread(f)
+            data = np.array(data, dtype=np.float32)
+            data /= 255.
+            data = cv2.resize(src=data, dsize=(224, 224), interpolation=cv2.INTER_LINEAR)
+            images[i] = data
+            i += 1
+    mean = np.mean(images, axis=0)
+    std = np.std(images, axis=0)
+    images = (images - mean) / std
+    predictions = np.reshape(model.predict(images), (9,))
+    votes = len(predictions > 0.5)
     geoJSON.append({
             "type": "Feature",
             "geometry": {
@@ -51,7 +58,7 @@ def model_confidence_vote(cluster_path):
                 "coordinates": [lon, lat]
             },
             "properties": {
-                "wildfire": prediction,
+                "wildfire": votes >= 5,
                 "votes": votes,
             }
         }
@@ -60,10 +67,11 @@ def model_confidence_vote(cluster_path):
 def predict_wildfire_risk(dir_path):
     for path, directories, files in os.walk(dir_path):
         for cluster_dir in directories:
-            f = os.path.join(path, cluster_dir)
-            print(f)
-            model_confidence_vote(f)
+            print(os.path.join(path, cluster_dir))
+            model_confidence_vote(os.path.join(path, cluster_dir))
 
 predict_wildfire_risk("/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/oregon_sample")
 with open("sample.json", "w") as outfile:
     json.dump(geoJSON, outfile)
+
+
