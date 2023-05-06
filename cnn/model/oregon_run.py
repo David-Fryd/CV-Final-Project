@@ -46,6 +46,8 @@ def model_confidence_vote(cluster_path):
             data = cv2.resize(src=data, dsize=(224, 224), interpolation=cv2.INTER_LINEAR)
             images[i] = data
             i += 1
+        if i == 8:
+            break
     mean = np.mean(images, axis=0)
     std = np.std(images, axis=0)
     images = (images - mean) / std
@@ -66,17 +68,20 @@ def model_confidence_vote(cluster_path):
     return votes == 9
 
 def predict_wildfire_risk(dir_path):
+    clusters = 0
     wildfires = 0
     for path, directories, files in os.walk(dir_path):
         for cluster_dir in directories:
-            print(os.path.join(path, cluster_dir))
+            clusters += 1
+            if clusters % 10:
+                print(clusters)
             wildfire = model_confidence_vote(os.path.join(path, cluster_dir))
             if wildfire:
                 wildfires += 1
-    print(f"num wildfires: {wildfires}")
+    print(f"num wildfires: {wildfires} out of {clusters}")
 
 predict_wildfire_risk("/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/oregon_sample")
-with open("sample.json", "w") as outfile:
+with open("wildfire.json", "w") as outfile:
     json.dump(geoJSON, outfile)
 
 
