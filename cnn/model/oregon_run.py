@@ -50,7 +50,9 @@ def model_confidence_vote(cluster_path):
     std = np.std(images, axis=0)
     images = (images - mean) / std
     predictions = np.reshape(model.predict(images), (9,))
-    votes = len(predictions > 0.5)
+    print(predictions)
+    votes = np.count_nonzero(predictions > 0.5)
+    print(votes)
     geoJSON.append({
             "type": "Feature",
             "geometry": {
