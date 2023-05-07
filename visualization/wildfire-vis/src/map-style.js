@@ -31,3 +31,51 @@ export const heatmapLayer = {
     "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 9, 0],
   },
 };
+
+export const circleLayerForHeatmap = {
+  id: "circle-heatmap",
+  type: "circle",
+  paint: {
+    "circle-radius": 3,
+    "circle-color": "#FF00FF",
+    "circle-opacity": 1,
+  },
+};
+
+export const circleLayerOutline = {
+  id: "circle-outline",
+  type: "circle",
+  paint: {
+    "circle-radius": 8,
+    "circle-color": "#FFFFFF",
+    "circle-opacity": 1,
+  },
+};
+export const circleLayerDot = {
+  id: "circle-dot",
+  type: "circle",
+  paint: {
+    "circle-radius": 4,
+    "circle-color": "#ff00ff",
+    "circle-opacity": 1,
+  },
+};
+
+export const circleLayerOutline2 = {
+  id: "circle-outline2",
+  type: "circle",
+  paint: {
+    "circle-radius": 4,
+    "circle-color": "#FFFFFF",
+    "circle-opacity": 1,
+  },
+};
+export const circleLayerDot2 = {
+  id: "circle-dot2",
+  type: "circle",
+  paint: {
+    "circle-radius": 2,
+    "circle-color": "#cc00cc",
+    "circle-opacity": 1,
+  },
+};
