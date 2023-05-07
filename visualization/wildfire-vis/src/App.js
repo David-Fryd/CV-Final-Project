@@ -29,9 +29,9 @@ function App() {
   const [viewport, setViewport] = useState({
     // width: "100vw",
     // height: "100vh",
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
+    latitude: 44.0041,
+    longitude: -120.5542,
+    zoom: 6.5,
   });
 
   return (
@@ -42,7 +42,7 @@ function App() {
         height="100vh"
         mapboxAccessToken={mapboxToken}
         onMove={(event) => setViewport(event.viewState)}
-        mapStyle="mapbox://styles/mapbox/dark-v10"
+        mapStyle="mapbox://styles/mapbox/satellite-v9"
         // Streets: mapbox://styles/mapbox/streets-v11
         // Outdoors: mapbox://styles/mapbox/outdoors-v11
         // Light: mapbox://styles/mapbox/light-v10
