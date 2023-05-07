@@ -10,6 +10,7 @@ import {
   circleLayerOutline2,
   circleLayerDot2,
   circleLayerForHeatmap,
+  circleLayerOutlineForHeatmap,
 } from "./map-style.js";
 import MapGL, { Source, Layer } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css"; // required import
@@ -46,15 +47,16 @@ function App() {
     <div className="App">
       <ReactMapGL
         {...viewport}
+        attributionControl={false}
         width="100vw"
         height="100vh"
         mapboxAccessToken={mapboxToken}
         onMove={(event) => setViewport(event.viewState)}
         // CUSTOM DARK STYLE
         // mapStyle="mapbox://styles/david-fryd/clhctzym4009601pe266yh2ts"
-        // mapStyle="mapbox://styles/mapbox/satellite-v9"
+        mapStyle="mapbox://styles/mapbox/satellite-v9"
         // mapStyle="mapbox://styles/mapbox/outdoors-v11"
-        mapStyle="mapbox://styles/mapbox/light-v10"
+        // mapStyle="mapbox://styles/mapbox/light-v10"
         // mapStyle="mapbox://styles/mapbox/dark-v10"
         // Streets: mapbox://styles/mapbox/streets-v11
         // Outdors: mapbox://styles/mapbox/outdoors-v11
@@ -65,6 +67,7 @@ function App() {
       >
         <Source type="geojson" data={geojson}>
           <Layer {...heatmapLayer} />
+          <Layer {...circleLayerOutlineForHeatmap} />
           <Layer {...circleLayerForHeatmap} />
         </Source>
         {/* Best results w/ mapStyle="mapbox://styles/mapbox/satellite-v9" */}

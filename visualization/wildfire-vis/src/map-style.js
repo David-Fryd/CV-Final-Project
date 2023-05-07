@@ -1,6 +1,6 @@
 const MAX_ZOOM_LEVEL = 12;
 
-const MIN_VOTES = 6;
+const MIN_VOTES = 1;
 const MAX_VOTES = 9;
 
 export const heatmapLayer = {
@@ -10,17 +10,19 @@ export const heatmapLayer = {
   paint: {
     "heatmap-weight": [
       "interpolate",
-      ["linear"],
+      // ["linear"],
+      ["exponential", 2],
       ["get", "votes"],
       MIN_VOTES,
       0.1,
       MAX_VOTES,
       3,
     ],
-    "heatmap-intensity": 0.8,
+    "heatmap-intensity": 0.7,
     "heatmap-radius": [
       "interpolate",
-      ["linear"],
+      ["exponential", 1],
+      // ["linear"],
       ["get", "votes"],
       MIN_VOTES,
       5,
@@ -38,6 +40,15 @@ export const circleLayerForHeatmap = {
   paint: {
     "circle-radius": 3,
     "circle-color": "#FF00FF",
+    "circle-opacity": 1,
+  },
+};
+export const circleLayerOutlineForHeatmap = {
+  id: "circle-outline-heatmap",
+  type: "circle",
+  paint: {
+    "circle-radius": 4,
+    "circle-color": "#FFFFFF",
     "circle-opacity": 1,
   },
 };
