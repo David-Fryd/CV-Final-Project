@@ -19,6 +19,7 @@ import MapGL, { Source, Layer } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css"; // required import
 
 const USE_DENSE = true;
+const SHOW_POINTS = true;
 
 const mapboxToken =
   "pk.eyJ1IjoiZGF2aWQtZnJ5ZCIsImEiOiJjbGhjbmIzMWYxMnR5M2VvMWp4dGQ4NjlyIn0.-6wciYJoESyTo6nSJhX4TQ";
@@ -91,15 +92,15 @@ function App() {
         {!USE_DENSE && (
           <Source type="geojson" data={geojson}>
             <Layer {...heatmapLayer} />
-            <Layer {...circleLayerOutlineForHeatmap} />
-            <Layer {...circleLayerForHeatmap} />
+            {SHOW_POINTS && <Layer {...circleLayerOutlineForHeatmap} />}
+            {SHOW_POINTS && <Layer {...circleLayerForHeatmap} />}
           </Source>
         )}
         {USE_DENSE && (
           <Source type="geojson" data={geojson}>
             <Layer {...heatmapLayerDENSE} />
-            <Layer {...circleLayerOutlineForHeatmapDENSE} />
-            <Layer {...circleLayerForHeatmapDENSE} />
+            {SHOW_POINTS && <Layer {...circleLayerOutlineForHeatmapDENSE} />}
+            {SHOW_POINTS && <Layer {...circleLayerForHeatmapDENSE} />}
           </Source>
         )}
         {/* Best results w/ mapStyle="mapbox://styles/mapbox/satellite-v9" */}
