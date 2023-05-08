@@ -1,4 +1,5 @@
 import geopandas as gpd
+import pandas as pd
 from shapely.geometry import Point
 from math import cos, pi
 import os
@@ -6,6 +7,9 @@ import requests
 from math import log2
 import configparser
 from math import radians, sin, cos, sqrt, atan2
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import BoundedSemaphore
+import time
 
 # Create a ConfigParser instance
 config = configparser.ConfigParser()
@@ -83,10 +87,10 @@ std_dev_zoom_level = 0
 # Make sure the subdirectory exists; if not, create it
 os.makedirs(output_directory_name, exist_ok=True)
 
-SKIP_TO = 41
-for index, row in sampled_points.iterrows():  
-    if index < SKIP_TO:
-        continue  
+
+
+
+def process_cluster(index: int, row: pd.Series, sampled_points: pd.DataFrame, output_directory_name: str, image_size_meters: int, image_width: int, image_height: int, mapbox_style: str, mapbox_access_token: str, cluster_dimension_x: int, cluster_dimension_y: int, polyname: str) -> None:
     latitude = row.geometry.y
     longitude = row.geometry.x
 
@@ -132,3 +136,31 @@ for index, row in sampled_points.iterrows():
     gdf.to_file(os.path.join(cluster_output_directory, f'features_{polyname}_{index}.geojson'), driver='GeoJSON')
 
 
+
+SKIP_TO = 41
+
+# Limit the requests to 1100 per minute, MAPBOX Static image API limit is 1200 but we play it a bit safe to add an extra 5 mins of expected time
+RATE_LIMIT = 1100
+rate_limit = BoundedSemaphore(RATE_LIMIT)
+rate_limit_refresh_time = 60  # seconds
+
+def rate_limit_request():
+    rate_limit.acquire()
+
+def rate_limit_release():
+    rate_limit.release()
+    time.sleep(rate_limit_refresh_time / RATE_LIMIT)
+
+with ThreadPoolExecutor() as executor:
+    futures = []
+    for index, row in sampled_points.iterrows():
+        if index < SKIP_TO:
+            continue
+
+        rate_limit_request()
+        futures.append(executor.submit(process_cluster, index, row, sampled_points, output_directory_name, image_size_meters, image_width, image_height, mapbox_style, mapbox_access_token, cluster_dimension_x, cluster_dimension_y, polyname))
+        executor.submit(rate_limit_release)
+
+    # Wait for all threads to complete
+    for future in as_completed(futures):
+        future.result()
