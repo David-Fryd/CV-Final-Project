@@ -4,6 +4,7 @@ import ReactMapGL from "react-map-gl";
 import { useState } from "react";
 import {
   heatmapLayer,
+  heatmapLayerDENSE,
   circleLayer,
   circleLayerOutline,
   circleLayerDot,
@@ -11,9 +12,13 @@ import {
   circleLayerDot2,
   circleLayerForHeatmap,
   circleLayerOutlineForHeatmap,
+  circleLayerOutlineForHeatmapDENSE,
+  circleLayerForHeatmapDENSE,
 } from "./map-style.js";
 import MapGL, { Source, Layer } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css"; // required import
+
+const USE_DENSE = true;
 
 const mapboxToken =
   "pk.eyJ1IjoiZGF2aWQtZnJ5ZCIsImEiOiJjbGhjbmIzMWYxMnR5M2VvMWp4dGQ4NjlyIn0.-6wciYJoESyTo6nSJhX4TQ";
@@ -25,14 +30,32 @@ const geojson = {
 };
 
 // Injest "wildfires.json" and set the features array to the geojson.features array
-fetch("/wildfires.json")
-  .then((response) => response.json())
-  .then((data) => {
-    geojson.features = data;
-    console.log(geojson); // Move this line inside the .then() block
-  });
+
+if (!USE_DENSE) {
+  fetch("wildfires.json")
+    .then((response) => response.json())
+    .then((data) => {
+      geojson.features = data;
+      console.log(geojson);
+    });
+} else {
+  fetch("wildfire-dense.json")
+    .then((response) => response.json())
+    .then((data) => {
+      geojson.features = data;
+      console.log(geojson);
+    });
+}
+
+// fetch("/wildfires-dense.json")
+//   .then((response) => response.json())
+//   .then((data) => {
+//     geojsonDense.features = data;
+//     console.log(geojsonDense);
+//   });
 
 console.log(geojson);
+// console.log(geojsonDense);
 
 function App() {
   const [viewport, setViewport] = useState({
@@ -65,11 +88,20 @@ function App() {
         // Satellite: mapbox://styles/mapbox/satellite-v9
         // Satellite Streets: mapbox://styles/mapbox/satellite-streets-v11
       >
-        <Source type="geojson" data={geojson}>
-          <Layer {...heatmapLayer} />
-          <Layer {...circleLayerOutlineForHeatmap} />
-          <Layer {...circleLayerForHeatmap} />
-        </Source>
+        {!USE_DENSE && (
+          <Source type="geojson" data={geojson}>
+            <Layer {...heatmapLayer} />
+            <Layer {...circleLayerOutlineForHeatmap} />
+            <Layer {...circleLayerForHeatmap} />
+          </Source>
+        )}
+        {USE_DENSE && (
+          <Source type="geojson" data={geojson}>
+            <Layer {...heatmapLayerDENSE} />
+            <Layer {...circleLayerOutlineForHeatmapDENSE} />
+            <Layer {...circleLayerForHeatmapDENSE} />
+          </Source>
+        )}
         {/* Best results w/ mapStyle="mapbox://styles/mapbox/satellite-v9" */}
         {/* <Source type="geojson" data={geojson}>
           <Layer {...circleLayerOutline} />
