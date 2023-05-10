@@ -1,2 +1,13 @@
-earthengine/.ENV
+# Contain the very large image files that we used for evaluation of the CNN on Oregon
+geo/getimagesmapbox/images/
+get/getimagesmapbox/images_deprecated/
+get/getimagesmapbox/oregon_images/
+
+# contains keys for querying Google Earth Engine for satellite images
+earthengine/.ENV 
+# contains large weight files that are cumbersome to push
 cnn/model/vgg16_imagenet.h5
+cnn/model/__pycache__/
+
+# DS_Store (mac metadata file we shouldnt store)
+**/.DS_Store
