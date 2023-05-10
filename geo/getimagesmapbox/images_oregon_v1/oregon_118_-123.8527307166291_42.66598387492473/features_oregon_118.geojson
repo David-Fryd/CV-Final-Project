@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "filename": "oregon_118_[-1,-1]_-123.86494736702262_42.657000763174814.png" }, "geometry": { "type": "Point", "coordinates": [ -123.864947367022623, 42.657000763174814 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[-1,0]_-123.8527307166291_42.657000763174814.png" }, "geometry": { "type": "Point", "coordinates": [ -123.852730716629097, 42.657000763174814 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[-1,1]_-123.84051406623557_42.657000763174814.png" }, "geometry": { "type": "Point", "coordinates": [ -123.840514066235571, 42.657000763174814 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[0,-1]_-123.86494736702262_42.66598387492473.png" }, "geometry": { "type": "Point", "coordinates": [ -123.864947367022623, 42.665983874924727 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[0,0]_-123.8527307166291_42.66598387492473.png" }, "geometry": { "type": "Point", "coordinates": [ -123.852730716629097, 42.665983874924727 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[0,1]_-123.84051406623557_42.66598387492473.png" }, "geometry": { "type": "Point", "coordinates": [ -123.840514066235571, 42.665983874924727 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[1,-1]_-123.86494736702262_42.67496698667464.png" }, "geometry": { "type": "Point", "coordinates": [ -123.864947367022623, 42.67496698667464 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[1,0]_-123.8527307166291_42.67496698667464.png" }, "geometry": { "type": "Point", "coordinates": [ -123.852730716629097, 42.67496698667464 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_118_[1,1]_-123.84051406623557_42.67496698667464.png" }, "geometry": { "type": "Point", "coordinates": [ -123.840514066235571, 42.67496698667464 ] } }
+]
+}

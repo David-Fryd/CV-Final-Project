@@ -9,7 +9,7 @@ import random
 import cv2
 from cnn import YourModel
 
-weights_path = "/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/model/checkpoints/your.weights.e004-acc0.9482.h5"
+weights_path = "/Users/davidfryd/Documents/your.weights.e016-acc0.9663.h5"
 dims = (224, 224, 3)
 
 model = YourModel()
@@ -80,8 +80,8 @@ def predict_wildfire_risk(dir_path):
                 wildfires += 1
     print(f"num wildfires: {wildfires} out of {clusters}")
 
-predict_wildfire_risk("/Users/aldai/Documents/Brown/cs1430/CV-Final-Project/cnn/oregon_sample")
-with open("wildfire.json", "w") as outfile:
+predict_wildfire_risk("/Users/davidfryd/BrownCS/cs1430/CV-Final-Project/geo/getimagesmapbox/images")
+with open("wildfire-predictions.json", "w") as outfile:
     json.dump(geoJSON, outfile)
 
 

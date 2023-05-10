@@ -185,9 +185,14 @@ def export_image_at_point(point, index, firesize):
     # See tasks here: https://code.earthengine.google.com/tasks
 
 
-SKIP_TO = 311
+SKIP_TO = 1593
 for idx, fire in enumerate(fires):
+    if idx < SKIP_TO:
+        continue
     print(f"idx: {idx}")
     print(f"attempting to export {fire['x']}, {fire['y']}: size {fire['size']}")
     point = ee.Geometry.Point([float(fire['x']), float(fire['y'])])
-    export_image_at_point(point, idx, fire['size'])
+    try:
+        export_image_at_point(point, idx, fire['size'])
+    except:
+        print(f"error: there was an error exporting file idx {idx}")

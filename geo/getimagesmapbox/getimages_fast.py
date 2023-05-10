@@ -1,3 +1,5 @@
+# DON'T USE THIS, USE THE FAST VERSION INSTEAD (getimages_fast.py)
+
 import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point

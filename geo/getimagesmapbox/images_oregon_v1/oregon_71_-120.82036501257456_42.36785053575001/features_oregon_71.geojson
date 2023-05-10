@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "filename": "oregon_71_[-1,-1]_-120.83252351745833_42.358867424000096.png" }, "geometry": { "type": "Point", "coordinates": [ -120.832523517458327, 42.358867424000096 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[-1,0]_-120.82036501257456_42.358867424000096.png" }, "geometry": { "type": "Point", "coordinates": [ -120.820365012574555, 42.358867424000096 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[-1,1]_-120.80820650769078_42.358867424000096.png" }, "geometry": { "type": "Point", "coordinates": [ -120.808206507690784, 42.358867424000096 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[0,-1]_-120.83252351745833_42.36785053575001.png" }, "geometry": { "type": "Point", "coordinates": [ -120.832523517458327, 42.367850535750009 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[0,0]_-120.82036501257456_42.36785053575001.png" }, "geometry": { "type": "Point", "coordinates": [ -120.820365012574555, 42.367850535750009 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[0,1]_-120.80820650769078_42.36785053575001.png" }, "geometry": { "type": "Point", "coordinates": [ -120.808206507690784, 42.367850535750009 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[1,-1]_-120.83252351745833_42.37683364749992.png" }, "geometry": { "type": "Point", "coordinates": [ -120.832523517458327, 42.376833647499922 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[1,0]_-120.82036501257456_42.37683364749992.png" }, "geometry": { "type": "Point", "coordinates": [ -120.820365012574555, 42.376833647499922 ] } },
+{ "type": "Feature", "properties": { "filename": "oregon_71_[1,1]_-120.80820650769078_42.37683364749992.png" }, "geometry": { "type": "Point", "coordinates": [ -120.808206507690784, 42.376833647499922 ] } }
+]
+}
