@@ -12,8 +12,8 @@ def split_images(input_dir, output_dir1, output_dir2):
     if not os.path.exists(output_dir2):
         os.makedirs(output_dir2)
 
-    image_files = [f for f in os.listdir(input_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp'))]
-    image_files.sort()
+    image_files = [f for f in os.listdir(input_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tif'))]
+    image_files = sorted(image_files, key=lambda x: int(x.split("_")[1]))
 
     for index, image_file in enumerate(image_files):
         src_path = os.path.join(input_dir, image_file)
@@ -22,11 +22,10 @@ def split_images(input_dir, output_dir1, output_dir2):
         else:
             dst_path = os.path.join(output_dir2, image_file)
         shutil.copy(src_path, dst_path)
-        print(f"Copied '{src_path}' to '{dst_path}'")
 
 if __name__ == "__main__":
-    input_directory = "path/to/input_directory"
-    output_directory1 = "path/to/output_directory1"
-    output_directory2 = "path/to/output_directory2"
+    input_directory = "us-dataset"
+    output_directory1 = "test/wildfire"
+    output_directory2 = "train/wildfire"
 
     split_images(input_directory, output_directory1, output_directory2)
