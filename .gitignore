@@ -14,3 +14,9 @@ cnn/data
 
 # DS_Store (mac metadata file we shouldnt store)
 **/.DS_Store
+
+# more data ignore
+**/oregon_sample
+**/test/
+**/train/
+**/valid/
