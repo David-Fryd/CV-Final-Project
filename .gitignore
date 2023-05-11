@@ -14,7 +14,9 @@ earthengine/localdisplay
 # contains large weight files that are cumbersome to push
 cnn/model/vgg16_imagenet.h5
 cnn/model/__pycache__/
+cnn/model/logs/
 cnn/oregon_sample/
+
 
 # Data set
 cnn/data
