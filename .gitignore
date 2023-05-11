@@ -9,5 +9,8 @@ earthengine/.ENV
 cnn/model/vgg16_imagenet.h5
 cnn/model/__pycache__/
 
+# Data set
+cnn/data
+
 # DS_Store (mac metadata file we shouldnt store)
 **/.DS_Store
