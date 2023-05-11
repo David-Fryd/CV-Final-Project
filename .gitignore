@@ -3,6 +3,10 @@ geo/getimagesmapbox/images/
 get/getimagesmapbox/images_deprecated/
 get/getimagesmapbox/oregon_images/
 
+**/images_deprecated/
+**/oregon_images/
+**/images_oregon_v1
+
 # contains keys for querying Google Earth Engine for satellite images
 earthengine/.ENV 
 # contains large weight files that are cumbersome to push
